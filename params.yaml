@@ -1,0 +1,17 @@
+data:
+  csv_raw: '../data/raw/adult_raw.csv'
+  csv_cleaned: '../data/clean/adult_cleaned.csv'
+
+testsplit:
+  random_state: 42
+  test_size: 0.2
+
+#encoder:
+#  onehot: '../encoders/onehot.pkl'
+
+#scaler:
+#  standard: '../scalers/standard.pkl'
+#  minmax: '../scalers/minmax.pkl'
+
+#model:
+#  KNN: '../models/knn.pkl'
