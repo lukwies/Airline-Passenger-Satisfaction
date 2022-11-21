@@ -1,10 +1,10 @@
 data:
-  csv_raw: '../data/raw/adult_raw.csv'
-  csv_cleaned: '../data/clean/adult_cleaned.csv'
+  raw:   '../data/raw/flight_rating.csv'
+  clean: '../data/clean/flight_rating_clean.csv'
 
 testsplit:
   random_state: 42
-  test_size: 0.2
+  test_size:    0.25
 
 #encoder:
 #  onehot: '../encoders/onehot.pkl'
