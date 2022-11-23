@@ -1,6 +1,11 @@
 data:
+  # Raw dataset
   raw:   '../data/raw/flight_rating.csv'
+  # Cleaned dataset
   clean: '../data/clean/flight_rating_clean.csv'
+  # Scaled and encoded dataset
+  trans: '../data/clean/flight_rating_transformed.csv'
+
 
 testsplit:
   random_state: 42
