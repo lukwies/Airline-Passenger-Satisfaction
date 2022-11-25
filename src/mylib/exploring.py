@@ -39,3 +39,28 @@ def count_outliers(data):
 		if n_outliers > 0:
 			d[col] = n_outliers
 	return d
+
+
+def get_best_features(X, y, k=10):
+	"""
+	Get the best k features.
+
+	Args:
+	    X: Independent features
+	    y: Dependent feature
+	    k: Number of features to select
+	Return:
+	    Dataframe with features and their according score
+	"""
+	# SelectKBest requires the data to be positive, so we apply
+	# a MinMaxScaler before calling it.
+	minMax = MinMaxScaler()
+	minMax.fit(X, y)
+	X_scaled = minMax.transform(X)
+
+	kbest = SelectKBest(chi2, k=k)
+	kbest.fit(X_scaled, y)
+
+	ml = [elem for elem in zip(X.columns.tolist(), kbest.scores_)]
+	ml.sort(reverse=True)
+	return pd.DataFrame(data = ml, columns = ['feature','score'])
