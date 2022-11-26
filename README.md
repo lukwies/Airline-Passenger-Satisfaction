@@ -10,11 +10,6 @@ For a detailed description of the dataset, [click here](#Dataset-Description).
 
 ## Business Questions
 
-- Is there a difference in the rating between males and females?
-- What impact has the type of travel (business/private) on the rating ?
-- What impact has the class (eco, eco+, business) on the rating ?
-
-- Can we predict if a passenger is satisfied or not?
 
 
 ## Dataset Description
