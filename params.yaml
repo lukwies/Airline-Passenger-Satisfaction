@@ -11,12 +11,15 @@ testsplit:
   random_state: 42
   test_size:    0.25
 
-#encoder:
-#  onehot: '../encoders/onehot.pkl'
+encoder:
+  onehot: '../encoder/onehot.pkl'
 
-#scaler:
-#  standard: '../scalers/standard.pkl'
-#  minmax: '../scalers/minmax.pkl'
+scaler:
+  standard: '../scaler/standard_scaler.pkl'
+  minmax:   '../scaler/minmax_scaler.pkl'
+  power:    '../scaler/power_transformer.pkl'
 
-#model:
-#  KNN: '../models/knn.pkl'
+model:
+  logReg: '../models/logistic_regressor.pkl'
+  randForest: '../models/random_forest.pkl'
+  knn:    '../models/knn_classifier.pkl'
