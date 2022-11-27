@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.feature_selection import SelectKBest, chi2
+
 
 def print_unique(data):
 	'''
@@ -64,3 +67,28 @@ def get_best_features(X, y, k=10):
 	ml = [elem for elem in zip(X.columns.tolist(), kbest.scores_)]
 	ml.sort(reverse=True)
 	return pd.DataFrame(data = ml, columns = ['feature','score'])
+
+
+def get_balanced_data(data, column):
+	'''
+	Get a dataframe where the unique values of the given column
+	are well balanced.
+
+	Args:
+		data: The dataset
+		column: The column to balance
+	Return:
+		Balanced dataset
+	'''
+
+	if data[column].dtype != object:
+		raise Exception('categorical column required')
+
+	balanced = pd.DataFrame()
+	nrows = min(data[column].value_counts())
+
+	for val in data[column].value_counts().keys():
+		chunk = data[data[column] == val].iloc[:nrows,:].reset_index(drop=True)
+		balanced = pd.concat([balanced, chunk], axis=0)
+
+	return balanced
