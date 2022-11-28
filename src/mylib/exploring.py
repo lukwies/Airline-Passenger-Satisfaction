@@ -64,9 +64,9 @@ def get_best_features(X, y, k=10):
 	kbest = SelectKBest(chi2, k=k)
 	kbest.fit(X_scaled, y)
 
-	ml = [elem for elem in zip(X.columns.tolist(), kbest.scores_)]
+	ml = [elem for elem in zip(kbest.scores_, X.columns.tolist())]
 	ml.sort(reverse=True)
-	return pd.DataFrame(data = ml, columns = ['feature','score'])
+	return pd.DataFrame(data = ml, columns = ['score','feature'])
 
 
 def get_balanced_data(data, column):
