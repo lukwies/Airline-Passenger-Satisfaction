@@ -21,7 +21,7 @@ def print_classification_results(model, y, y_pred):
 	fig,ax = plt.subplots(1,2, figsize=(9,3))
 
 	cm = confusion_matrix(y, y_pred)
-	ConfusionMatrixDisplay(cm, display_labels=model.classes_).plot(ax=ax[0])
+	ConfusionMatrixDisplay(cm, display_labels=['True','False']).plot(ax=ax[0])
 
 	precisions, recalls, thresholds = precision_recall_curve(y, y_pred)
 	ax[1].plot(thresholds, precisions[:-1], "b--", label="Precision")
