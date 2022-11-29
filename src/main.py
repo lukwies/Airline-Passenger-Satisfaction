@@ -5,12 +5,9 @@ import pickle
 import sys
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import StandardScaler, PowerTransformer, MinMaxScaler
-from sklearn.neighbors import KNeighborsRegressor
 
-import lib.cleaning as clean
-
+import mylib.cleaning as clean
+import mylib.transform as trans
 
 def load_and_clean_data(csv_path):
 	'''
@@ -32,51 +29,8 @@ def split_X_y(data):
 	Return:
 		X, y
 	'''
-	df = data.copy().drop(['date', 'daytime', 'seasons',
-			'functioning_day', 'temperature_type',
-			'solar_radiation'], axis=1)
-
-	X = df.drop(['rented_bike_count'], axis=1)
-	y = df['rented_bike_count']
-	return X,y
-
-
-def encode_and_scale(config, X, y):
-	'''
-	Apply encoder and scalers to given X/y columns.
-
-	Args:
-		config: YAML config instance
-		X: Dependent columns
-		y: Independent column
-	Return:
-		X, y
-	'''
-	with open(config['encoder']['onehot'], 'rb') as file:
-		ohe = pickle.load(file)
-
-	X_cat     = X.select_dtypes(object)
-	X_cat_enc = ohe.transform(X_cat).toarray()
-	X_cat_enc = pd.DataFrame(X_cat_enc, columns=ohe.get_feature_names_out())
-
-
-	with open(config['scaler']['standard'], 'rb') as file:
-		standard = pickle.load(file)
-
-	X_num        = X.select_dtypes(np.number)
-	X_num_scaled = standard.transform(X_num)
-	X_num_scaled = pd.DataFrame(X_num_scaled, columns=X_num.columns)
-
-
-	with open(config['scaler']['minmax'], 'rb') as file:
-		minmax = pickle.load(file)
-
-	X_num_scaled = minmax.transform(X_num_scaled)
-	X_num_scaled = pd.DataFrame(X_num_scaled, columns=X_num.columns)
-
-
-	X = pd.concat([X_cat_enc, X_num_scaled], axis=1)
-
+	X = df.drop(['id', 'satisfied'], axis=1)
+	y = df['satisfied']
 	return X,y
 
 
@@ -91,11 +45,11 @@ def apply_model(config, X, y):
 		y_pred,score
 	'''
 
-	with open(config['model']['KNN'], 'rb') as file:
-		knn = pickle.load(file)
+	with open(config['model']['randForest'], 'rb') as file:
+		rF = pickle.load(file)
 
-	y_pred = knn.predict(X)
-	score  = knn.score(X, y)
+	y_pred = rF.predict(X)
+	score  = rF.score(X, y)
 
 	return y_pred,score
 
@@ -103,7 +57,7 @@ def apply_model(config, X, y):
 
 if __name__ == '__main__':
 	if len(sys.argv) != 2:
-		print("Please pass a bike-sharing dataset for performing the prediction!!")
+		print("Please pass a flight rating dataset for performing the prediction!!")
 		sys.exit()
 
 	with open('../params.yaml') as file:
@@ -112,8 +66,7 @@ if __name__ == '__main__':
 	df = load_and_clean_data(sys.argv[1])
 
 	X,y = split_X_y(df)
-	X,y = encode_and_scale(config, X, y)
-
+	X   = trans.scale_and_encode_unseen(X)
 	y_pred,score = apply_model(config, X, y)
 
 	print(f"Score: {score}")
