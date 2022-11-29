@@ -25,16 +25,8 @@ st.set_page_config(
 	page_icon='👋'
 )
 
-st.sidebar.success('Select a page above')
+st.sidebar.success('Select a page')
 
-#with st.sidebar:
-#	with st.echo():
-#		st.write("This code will be printed to the sidebar.")
-#		st.write("e will be printed to the si.")
-#
-#	with st.spinner("Loading..."):
-#		time.sleep(5)
-#	st.success("Done!")
 
 st.markdown('# Analysis on Flight Rating')
 st.markdown('by Lukas Wiese')
