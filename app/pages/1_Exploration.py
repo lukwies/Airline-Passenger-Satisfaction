@@ -3,7 +3,6 @@ import altair as alt
 import pandas as pd
 import numpy as np
 import time
-import yaml
 
 import plotly.express as px
 import plotly.graph_objects as go
@@ -25,18 +24,14 @@ rate_cols_labels = ['Wifi service', 'Departure/Arrival time convenient',
 		'Checkin service', 'Inflight service', 'Cleanliness']
 
 
-with open('../params.yaml') as file:
-	config = yaml.safe_load(file)
-
-
 st.set_page_config(
 	page_title='Exploration',
-	page_icon='')
-
+	page_icon='',
+	layout='wide')
 
 st.title("Flight Ratings Exploration")
 
-data = pd.read_csv(config['data']['explore'])
+data = pd.read_csv('../data/clean/flight_rating_explore.csv')
 
 
 def plot_overall_rating_ditribution():

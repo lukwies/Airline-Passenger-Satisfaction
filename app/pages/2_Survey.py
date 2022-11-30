@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import time
-import yaml
 import pickle
 
 from sys import path
@@ -10,10 +9,6 @@ import os
 
 path.insert(0, os.path.abspath('../src'))
 import mylib.transform as transform
-
-# Open yaml config
-with open('../params.yaml') as file:
-	config = yaml.safe_load(file)
 
 
 st.set_page_config(
@@ -82,7 +77,7 @@ def predict_satisfaction():
 	X = build_dataframe_from_survey_data()
 
 	# Load random forest classifier
-	with open(config['model']['randForest'], 'rb') as file:
+	with open('../model/random_forest.pkl', 'rb') as file:
 		model = pickle.load(file)
 
 	X = transform.scale_and_encode_unseen(X)
@@ -104,13 +99,13 @@ def predict_satisfaction():
 def save_survey_to_csv():
 	X = build_dataframe_from_survey_data()
 
-	if os.path.isfile(config['data']['survey']):
+	if os.path.isfile('../data/survey/survey.csv'):
 		df = pd.read_csv(config['data']['survey'])
 	else:
 		df = pd.DataFrame()
 
 	df = pd.concat([df, X], axis=0)
-	df.to_csv(config['data']['survey'], index=False)
+	df.to_csv('../data/survey/survey.csv', index=False)
 	st.write('Saved')
 
 
