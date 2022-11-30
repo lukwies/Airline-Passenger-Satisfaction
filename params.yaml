@@ -4,6 +4,7 @@ data:
   explore: '../data/clean/flight_rating_explore.csv'
   train: '../data/scaled/flight_rating_train.csv'
   test:  '../data/scaled/flight_rating_test.csv'
+  survey: '../data/survey/survey.csv'
 
 
 testsplit:
