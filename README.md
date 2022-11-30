@@ -1,4 +1,4 @@
-<img width="400" src="https://cdn.cnn.com/cnnnext/dam/assets/210810173434-4-pan-am-707-economy-meals-credit-anne-sweeney-full-169.jpg">
+<img width="500" src="https://cdn.cnn.com/cnnnext/dam/assets/210810173434-4-pan-am-707-economy-meals-credit-anne-sweeney-full-169.jpg">
 
 # Project about flight ratings
 
@@ -9,6 +9,17 @@ For a detailed description of the dataset, [click here](#Dataset-Description).
 
 
 ## Business Questions
+- What is the average rating of the airline services?
+- Which services are rated best and which one worst?
+- Is there a difference in the rating between males and females?
+- What impact has the flightclass on the rating ?
+- Is the rating worse on longer flight distance?
+- Do passengers rate better on private than on business flights?
+- Does the age of a customer effect the rating?
+
+
+## Prediction
+- Is it possible to predict the satisfaction level of a customer?
 
 
 
@@ -39,3 +50,9 @@ Departure Delay in Minutes        : 0-1592 min
 Arrival Delay in Minutes          : 0-1584 min
 satisfaction                      : neutral or dissatisfied|satisfied
 </pre>
+
+## Presentation
+The presentation is done with tableau and can be found here:
+
+## Application
+I also created an application using streamlit and plotly which can be found here:
