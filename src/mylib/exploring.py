@@ -5,13 +5,21 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_selection import SelectKBest, chi2
 
 
-def print_unique(data):
+def print_unique(data, categoricals_only=False):
 	'''
 	Show unique values for each column.
+	Args:
+		data: DataFrame to observe
+		categoricals_only: Observe categoricals only?
 	'''
-	for col in data.columns:
-		uniq = data[col].unique()
-		print(f"COLUMN \x1b[1;31m{col}\x1b[0m ({data[col].dtype})")
+	if categoricals_only == True:
+		df = data.select_dtypes(object)
+	else:
+		df = data
+
+	for col in df.columns:
+		uniq = df[col].unique()
+		print(f"COLUMN \x1b[1;31m{col}\x1b[0m ({df[col].dtype})")
 
 		# Show first 20 values only
 		if len(uniq) > 20:
