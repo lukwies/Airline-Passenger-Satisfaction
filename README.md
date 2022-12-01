@@ -1,6 +1,5 @@
 <img width="500" src="https://cdn.cnn.com/cnnnext/dam/assets/210810173434-4-pan-am-707-economy-meals-credit-anne-sweeney-full-169.jpg">
 
-
 # Project on flight ratings
 An airline company is interested in how passengers rate their flight and aviation service.
 Therefore they envolved a survey to figure out the satisfaction level of their customers.
