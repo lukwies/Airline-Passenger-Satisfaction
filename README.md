@@ -12,8 +12,8 @@ For a detailed description of the dataset, [click here](#Dataset-Description).
 - What is the airline rating in general?
 - Which services are rated best and which one worst?
 - Is there a difference in the rating between males and females?
-- What impact has the flightclass on the rating ?
-- Is the rating worse on longer flight distance?
+- What impact does the flightclass have on the rating?
+- Is the rating worse for long distance flights?
 - Do passengers rate better on private than on business flights?
 - Does the age of a customer effect the rating?
 
