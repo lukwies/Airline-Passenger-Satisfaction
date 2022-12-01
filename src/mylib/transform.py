@@ -8,7 +8,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 
 
-def scale_and_encode(X_train, X_test):
+def scale_and_encode(X_train, X_test, store_as_pickle=True):
 	'''
 	Applies PowerTransformer, StandardScaler and OneHotEncoder
 	on given train and test set. All scalers/encoders are stored
@@ -42,8 +42,9 @@ def scale_and_encode(X_train, X_test):
 	X_train_num_np = pT.transform(X_train_num)
 	X_test_num_np  = pT.transform(X_test_num)
 
-	with open(config['scaler']['power'], 'wb') as file:
-		pickle.dump(pT, file)
+	if store_as_pickle:
+		with open(config['scaler']['power'], 'wb') as file:
+			pickle.dump(pT, file)
 
 	# Apply StandardScaler
 	sS = StandardScaler()
@@ -52,8 +53,9 @@ def scale_and_encode(X_train, X_test):
 	X_train_num_np = sS.transform(X_train_num_np)
 	X_test_num_np  = sS.transform(X_test_num_np)
 
-	with open(config['scaler']['standard'], 'wb') as file:
-		pickle.dump(sS, file)
+	if store_as_pickle:
+		with open(config['scaler']['standard'], 'wb') as file:
+			pickle.dump(sS, file)
 
 	# Apply OneHotEncoder
 	ohe = OneHotEncoder(drop='first')
@@ -62,8 +64,9 @@ def scale_and_encode(X_train, X_test):
 	X_train_cat_np = ohe.transform(X_train_cat).toarray()
 	X_test_cat_np  = ohe.transform(X_test_cat).toarray()
 
-	with open(config['encoder']['onehot'], 'wb') as file:
-		pickle.dump(ohe, file)
+	if store_as_pickle:
+		with open(config['encoder']['onehot'], 'wb') as file:
+			pickle.dump(ohe, file)
 
 
 	X_train_num = pd.DataFrame(X_train_num_np, columns=X_train_num.columns)
