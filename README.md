@@ -65,7 +65,6 @@ An approach for that prediction can be found
 	- travel for business reasons
 	- uses business class
 	- short distance flights
-
 * Average rating = 3.24
 * 84.3% rate better than 2.5
 * Best rated feature: Inflight service
