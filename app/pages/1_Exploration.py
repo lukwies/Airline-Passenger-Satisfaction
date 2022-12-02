@@ -3,7 +3,7 @@ import altair as alt
 import pandas as pd
 import numpy as np
 import time
-
+import yaml
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
@@ -23,70 +23,73 @@ rate_cols_labels = ['Wifi service', 'Departure/Arrival time convenient',
 		'Onboard service', 'Leg room service', 'Baggage handling',
 		'Checkin service', 'Inflight service', 'Cleanliness']
 
+with open('../params.yaml') as file:
+	config = yaml.safe_load(file)
 
 st.set_page_config(
 	page_title='Exploration',
 	page_icon='',
 	layout='wide')
 
-st.title("Flight Ratings Exploration")
+st.markdown("# Flight Ratings Exploration")
+st.markdown("Let's dive deeper into our dataset and see what can figure out. ")
+st.write("\n")
 
-data = pd.read_csv('../data/clean/flight_rating_explore.csv')
+data = pd.read_csv(config['data']['explore'])
 
 
+# Plot overall rating distribution
 def plot_overall_rating_ditribution():
+	st.markdown("## Overall ratings")
+	st.write("The overall ratings are almost normal distributed and most passengers "
+		 "seem to be happy with the airline services.")
 	fig = px.histogram(data, x='rating_avg')
-	fig.update_layout(yaxis_title='', xaxis_title='Rating',
-			title='Overall Rating')
+	fig.update_layout(yaxis_title='', xaxis_title='Rating')
 	st.plotly_chart(fig, use_container_size=True)
 
 # Plot average rating by gender
 def plot_ratings_by_gender():
-
+	st.markdown("## Rating by Gender")
+	st.write("Looking to the subsequent plot, we see that there's no sensible difference "
+		 "in the rating between male and female.")
 	grp = data.pivot_table(index='gender', values='rating_avg').reset_index()
-
 	fig = px.bar(grp, x='gender', y='rating_avg', color='gender',
 		color_discrete_map={'M':'#6699ff', 'F':'#ffb3ff'})
-	fig.update_layout(xaxis_title='Gender',
-			yaxis_title='Average Rating',
-			title='Rating by Gender')
+	fig.update_layout(xaxis_title='Gender', yaxis_title='Rating')
 	st.plotly_chart(fig, use_container_size=True)
 
 # Plot rating by flight class
 def plot_ratings_by_flight_class():
-
+	st.markdown("## Rating by Flight Class")
+	st.write("As we can see passengers using the business class vote more favourable.")
 	grp = data.pivot_table(index='class', values='rating_avg').reset_index()
-
 	fig = px.bar(grp, x='class', y='rating_avg', color='class',
 		color_discrete_map={'Business':'#6699ff', 'Eco':'#0055ff', 'Eco Plus':'#003cb3'})
-	fig.update_layout(xaxis_title='Flight class',
-			yaxis_title='Average Rating',
-			title='Rating by flight class')
+	fig.update_layout(xaxis_title='Flight class', yaxis_title='Rating')
 	st.plotly_chart(fig, use_container_size=True)
 
 # Plot rating by travel type
 def plot_rating_by_travel_type():
+	st.markdown("## Rating by travel reason")
+	st.write("Business travelers provide a slightly better rating than passengers "
+		 "traveling for private purpose.")
 
 	grp = data.pivot_table(index='type_of_travel', values='rating_avg').reset_index()
-
 	fig = px.bar(grp, x='type_of_travel', y='rating_avg', color='type_of_travel',
 		color_discrete_map={'Business':'#b30059', 'Private':'#4d0026'})
-	fig.update_layout(xaxis_title='Type of Travel',
-			yaxis_title='Average Rating',
-			title='Rating by travel type')
+	fig.update_layout(xaxis_title='Type of Travel', yaxis_title='Rating')
 	st.plotly_chart(fig, use_container_size=True)
-
-
 
 # Plot average rating by age
 def plot_rating_by_age():
+	st.markdown("## Rating by passenger age")
+	st.write("Let's see how the age of a passenger impacts the rating. In general we can conclude "
+		 "that - with some exceptions - customers from 40 to 60 year providing the highest ratings.")
 
 	grp = data.pivot_table(index='age', values=rate_cols).reset_index()
-
 	fig = go.Figure()
 	fig.update_xaxes(title_text='Age')
 	fig.update_yaxes(title_text='Rating')
-	fig.update_layout(title='Ratings by age')
 
 	for col,lbl in zip(rate_cols, rate_cols_labels):
 		fig.add_trace(go.Scatter(x=grp['age'], y=grp[col],
@@ -94,36 +97,40 @@ def plot_rating_by_age():
 
 	st.plotly_chart(fig, use_container_width=True)
 
-
 # Rating by Flight Distance
 def plot_rating_by_flight_distance():
-	grp = data.pivot_table(index='flight_distance_class', values='rating_avg').reset_index()
+	st.markdown("## Rating by flight distance")
+	st.write("Strangely enough: As longer the flight distance as better the rating. "
+		"This is where I expected the opposite..")
 
+	grp = data.pivot_table(index='flight_distance_class', values='rating_avg').reset_index()
 	fig = px.bar(grp, x='flight_distance_class', y='rating_avg', color='flight_distance_class',
 		color_discrete_map={'short':'#b3ffb3', 'medium':'#33ff33', 'long':'#00b300'})
-	fig.update_layout(xaxis_title='Flight distance',
-			yaxis_title='Average Rating',
-			title='Rating by flight distance')
+	fig.update_layout(yaxis_title='Rating')
 	st.plotly_chart(fig, use_container_size=True)
 
 
 # Best/Worst Ratings
 def plot_best_worst_features():
+
+	st.markdown("## Best/Worst rated services")
+	st.write("The airline has certainly space for improvement on inflight wifi service and "
+		"the ease of online booking but is already satisfying its passengers with its "
+		"baggage handling and the inflight service.")
+
 	d = {}
 	for col in rate_cols:
 		d[col] = [data[col].mean()]
 
 	grp = pd.DataFrame(d).T.sort_values(by=0).reset_index()
 	grp.columns = ['feature', 'rating']
-
 	fig = px.bar(grp, y='rating', x='feature', color='feature')
-	fig.update_layout(yaxis_title='Average Rating', xaxis_title='',
-			title='Best/Worst features', height=600)
+	fig.update_layout(yaxis_title='Rating', xaxis_title='', height=600)
 	st.plotly_chart(fig, use_container_size=False)
 
-
-
+# Distribution of categoricals
 def plot_categorical_distribution():
+	st.markdown("## Distribution of categorical features")
 	fig = make_subplots(rows=3, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}],
                                            [{'type':'domain'}, {'type':'domain'}],
                                            [{'type':'domain'}, {'type':'domain'}]])
@@ -152,7 +159,7 @@ def plot_categorical_distribution():
 	values = data['generation'].value_counts().values
 	fig.add_trace(go.Pie(labels=labels, values=values, name="Generation", title='Generation'), 3, 2)
 
-	fig.update_layout(title_text="Distribution of categoricals", height=2000)
+	fig.update_layout(height=2000)
 	st.plotly_chart(fig)
 
 
