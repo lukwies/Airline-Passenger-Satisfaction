@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import time
 import pickle
+import yaml
 
 from sys import path
 import os
@@ -17,6 +18,8 @@ st.set_page_config(
 
 st.title("Flight Satisfaction Survey")
 
+with open('../params.yaml') as file:
+    config = yaml.safe_load(file)
 
 
 gender = st.selectbox('Please select your gender', ('Female', 'Male'))
@@ -77,7 +80,7 @@ def predict_satisfaction():
 	X = build_dataframe_from_survey_data()
 
 	# Load random forest classifier
-	with open('../model/random_forest.pkl', 'rb') as file:
+	with open(config['model']['randForest'], 'rb') as file:
 		model = pickle.load(file)
 
 	X = transform.scale_and_encode_unseen(X)
@@ -99,14 +102,14 @@ def predict_satisfaction():
 def save_survey_to_csv():
 	X = build_dataframe_from_survey_data()
 
-	if os.path.isfile('../data/survey/survey.csv'):
+	if os.path.isfile(config['data']['survey']):
 		df = pd.read_csv(config['data']['survey'])
 	else:
 		df = pd.DataFrame()
 
 	df = pd.concat([df, X], axis=0)
-	df.to_csv('../data/survey/survey.csv', index=False)
-	st.write('Saved')
+	df.to_csv(config['data']['survey'], index=False)
+	st.write('Saved survey data')
 
 
 # Buttons
