@@ -81,5 +81,5 @@ The presentation is done with tableau and can be found
 
 ## Application
 I also created an application using streamlit and plotly which can be found
-<a hred='https://github.com/lukwies/final-bootcamp-project/tree/main/app'>here</a>.
+<a href='https://github.com/lukwies/final-bootcamp-project/tree/main/app'>here</a>.
 
