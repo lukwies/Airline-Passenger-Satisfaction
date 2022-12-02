@@ -59,6 +59,20 @@ I also think it would be interesting for an airline to predict the customer type
 An approach for that prediction can be found
 <a href='https://github.com/lukwies/final-bootcamp-project/blob/main/notebooks/predict_customer_type.ipynb'>here</a>.
 
+## Conclusions
+* Common customer:
+	- between 21 and 65 years
+	- travel for business reasons
+	- uses business class
+	- short distance flights
+
+* Average rating = 3.24
+* 84.3% rate better than 2.5
+* Best rated feature: Inflight service
+* Worst rated feature: Inflight wifi service
+* Predict customer satisfaction: Accuracy=96%
+* Predict customer type: Accuracy=99%
+
 
 ## Presentation
 The presentation is done with tableau and can be found
@@ -68,3 +82,4 @@ The presentation is done with tableau and can be found
 ## Application
 I also created an application using streamlit and plotly which can be found
 <a hred='https://github.com/lukwies/final-bootcamp-project/tree/main/app'>here</a>.
+
