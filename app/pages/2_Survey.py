@@ -12,10 +12,7 @@ path.insert(0, os.path.abspath('../src'))
 import mylib.transform as transform
 
 
-st.set_page_config(
-	page_title='Survey',
-	page_icon='👋')
-
+st.set_page_config(page_title='Survey')
 st.title("Flight Satisfaction Survey")
 
 with open('../params.yaml') as file:
