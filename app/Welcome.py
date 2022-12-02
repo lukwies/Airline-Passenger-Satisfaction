@@ -40,16 +40,16 @@ st.markdown('''
 	For a detailed description of the dataset, [click here](#dataset-description).
 	'''
 )
-st.markdown('## Business Questions')
-st.markdown('''
-    	- What is the average rating of the airline services?
-    	- Which services are rated best and which one worst?
-    	- Is there a difference in the rating between males and females?
-    	- What impact has the flightclass on the rating ?
-    	- Is the rating worse on longer flight distance?
-    	- Do passengers rate better on private than on business flights?
-    	- Does the age of a customer effect the rating?
-	''')
+#st.markdown('## Business Questions')
+#st.markdown('''
+#    	- What is the average rating of the airline services?
+#    	- Which services are rated best and which one worst?
+#    	- Is there a difference in the rating between males and females?
+#    	- What impact has the flightclass on the rating ?
+#    	- Is the rating worse on longer flight distance?
+#    	- Do passengers rate better on private than on business flights?
+#    	- Does the age of a customer effect the rating?
+#	''')
 
 st.markdown('## Dataset Description')
 st.markdown('''
