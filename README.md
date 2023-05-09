@@ -65,8 +65,8 @@ An approach for that prediction can be found
 	- travel for business reasons
 	- uses business class
 	- short distance flights
-* Average rating = 3.24
-* 84.3% rate better than 2.5
+* Average rating = 3.24/5
+* 84.3% of the customers rate better than 2.5
 * Best rated feature: Inflight service
 * Worst rated feature: Inflight wifi service
 * Predict customer satisfaction: Accuracy=96%
